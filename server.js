@@ -148,14 +148,15 @@ app.post('/restoreandlogin', async (req, res) => {
 });
 
 app.get('/get-location', async (req, res) => {
-  console.log('fefe');
-  const userIP = (req.headers['x-forwarded-for'] || req.socket.remoteAddress)
-    .split(',')[0]
-    .trim();
-
-  console.log(userIP);
-  const geo = geoip.lookup(userIP);
-  res.json(geo.ll);
+  try {
+    const userIP = (req.headers['x-forwarded-for'] || req.socket.remoteAddress)
+      .split(',')[0]
+      .trim();
+    const geo = geoip.lookup(userIP);
+    res.json(geo.ll);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 });
 
 app.get('/login', async (req, res) => {
