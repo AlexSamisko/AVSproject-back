@@ -155,8 +155,7 @@ app.get('/get-location', async (req, res) => {
 
   console.log(userIP);
   const geo = geoip.lookup(userIP);
-  console.log(geo);
-  res.json(geo);
+  res.json(geo.ll);
 });
 
 app.get('/login', async (req, res) => {
@@ -409,7 +408,9 @@ app.patch('/patch/completetodo', async function (req, res) {
 
 // http server
 
-var server = app.listen(5000, function () {
+const PORT = process.env.PORT || 5000;
+
+var server = app.listen(PORT, function () {
   console.log('Node server is running..');
 });
 
